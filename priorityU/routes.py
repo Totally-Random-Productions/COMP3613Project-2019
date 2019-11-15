@@ -56,6 +56,12 @@ def signup():
 def dashboard():
     return render_template('dashboard.html', name=current_user.username)
 
+@app.route('/dashboard/calendar')
+@login_required
+def calendar():
+    return render_template('calendar.html')
+
+
 @app.route('/dashboard/courses')
 @login_required
 def courses():
