@@ -14,13 +14,9 @@ class RegisterForm(FlaskForm):
     university = StringField('University', validators=[InputRequired(), Length(min=4,max=70)])
 
 class NewCourseForm(FlaskForm):
-    code = StringField('Code', validators=[InputRequired(), Length(min=8, max=8, message = "Course Code Invalid")])
-    title = StringField('Title', validators=[InputRequired(), Length(min=4, max=50, message = "Course Title Invalid")])
-
-class AddClassForm(FlaskForm):
-    classTime = TimeField('Class Time')
-    lecturer = StringField('Lecturer', validators=[Length(min=0, max=50, message = "Lecturer Name Invalid")])
-    classType = StringField('Class Type', validators=[InputRequired(), Length(min=3, max=20, message ="Class Type Invalid")])
-
+    code = StringField('Course Code', validators=[InputRequired(), Length(min=8, max=8, message="Invalid Course Code")])
+    title = StringField('Course Title', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course")])
+    lecturer = StringField('Lecturer', validators=[InputRequired(), Length(min=2, max=50, message="Invalid Lecturer")])
+    location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")])
 
 
