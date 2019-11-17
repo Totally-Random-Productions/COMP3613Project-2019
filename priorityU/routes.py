@@ -61,7 +61,6 @@ def dashboard():
 def calendar():
     return render_template('calendar.html')
 
-
 @app.route('/dashboard/courses')
 @login_required
 def courses():
