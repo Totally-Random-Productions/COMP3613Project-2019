@@ -25,12 +25,12 @@ class User(UserMixin, db.Model):
         return '<User %r>' %(self.name)
 
 
-class Tasks(db.Model):
+class Tasks(db.Model): #Dominic - is this necessary?
     __tablename__ = 'tasks'
 
     task_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    due_date = db.Column(db.String, nullable=False) # remember to change to false #remember to change
+    due_date = db.Column(db.String, nullable=False)
     priority = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -41,7 +41,7 @@ class Tasks(db.Model):
         self.priority = priority
         self.user_id = user_id
         self.status = status
-    
+
     def __repr__(self):
         return '<name %r>' % (self.body)
 
@@ -56,9 +56,48 @@ class Courses(db.Model):
     location = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, course_code=None,course_name=None,lecturer=None,location=None,user_id=None):
-        self.course_code=course_code
-        self.course_name=course_name
-        self.lecturer=lecturer
-        self.location=location
-        self.user_id=user_id
+    def __init__(self, course_code=None, course_name=None, lecturer=None, location=None, user_id=None):
+        self.course_code = course_code
+        self.course_name = course_name
+        self.lecturer = lecturer
+        self.location = location
+        self.user_id = user_id
+
+
+class Assignment(db.Model): # Dominic 18/11- created model for assignment db
+    __tablename__ = 'assignments'
+
+    a_id = db.Column(db.Integer, primary_key=True)
+    course_code = db.Column(db.String, db.ForeignKey('courses.course_code'))
+    asg_name = db.Column(db.String, nullable=False)
+    weighting = db.Column(db.Integer)
+    due_date = db.Column(db.Date, nullable=False)
+    complete = db.Column(db.Boolean, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, course_code=None, asg_name=None, weighting = 0, due_date=None, complete=False, user_id=None):
+        self.course_code = course_code
+        self. asg_name = asg_name
+        self.weighting = weighting
+        self.due_date = due_date
+        self.complete = complete
+        self.user_id = user_id
+
+
+class Exam(db.Model): # Dominic 18/11- created model for assignment db
+    __tablename__ = 'exams'
+
+    a_id = db.Column(db.Integer, primary_key=True)
+    course_code = db.Column(db.String, db.ForeignKey('courses.course_code'))
+    weighting = db.Column(db.Integer)
+    date = db.Column(db.Date, nullable=False)
+    duration = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, course_code=None, weighting=0, date=None, duration=None, user_id=None):
+        self.course_code = course_code
+        self.weighting = weighting
+        self.date = date
+        self.duration = duration
+        self.user_id = user_id
+          
