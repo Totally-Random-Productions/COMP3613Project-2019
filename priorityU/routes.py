@@ -6,6 +6,8 @@ from priorityU import app, db, login_manager
 from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
 from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm
 
+from models.forms import NewExamForm
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -88,6 +90,19 @@ def completed():
 def exams():
     user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.desc()).all() # Dominic 18/11- user exam data query
     return render_template('exams.html', exams=user_exams)
+
+@app.route('/dashboard/exams/add', methods=['GET', 'POST'])
+@login_required
+def addExam():
+    form = NewExamForm()
+    if form.validate_on_submit():  # Needs too check if course exists first
+        exam = Exam(course_code=form.course_code.data, weighting=form.weighting.data,
+                    date=form.date.data, time=form.time.data, duration=form.duration.data,
+                    user_id=current_user.get_id())
+        db.session.add(exam)
+        db.session.commit()
+        return redirect(url_for('exams'))
+    return render_template('addExam.html', form=form)
 
 @app.route('/dashboard/assignments')
 @login_required

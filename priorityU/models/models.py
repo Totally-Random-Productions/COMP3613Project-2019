@@ -91,13 +91,17 @@ class Exam(db.Model): # Dominic 18/11- created model for assignment db
     course_code = db.Column(db.String, db.ForeignKey('courses.course_code'))
     weighting = db.Column(db.Integer)
     date = db.Column(db.Date, nullable=False)
-    duration = db.Column(db.String, nullable=False)
+    time = db.Column(db.Time)
+    duration = db.Column(db.Integer, nullable=False)
+    location = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, course_code=None, weighting=0, date=None, duration=None, user_id=None):
+    def __init__(self, course_code=None, weighting=0, date=None, time=None, duration=None, location=None, user_id=None):
         self.course_code = course_code
         self.weighting = weighting
         self.date = date
+        self.time = time
         self.duration = duration
+        self.location = location
         self.user_id = user_id
           

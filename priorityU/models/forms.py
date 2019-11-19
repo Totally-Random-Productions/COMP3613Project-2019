@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, TimeField
+from wtforms import StringField, PasswordField, BooleanField, TimeField, DateField, IntegerField
 from wtforms.validators import InputRequired, Email, Length
+# from wtforms.fields import DateField
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=4,max=15)])
@@ -19,4 +20,10 @@ class NewCourseForm(FlaskForm):
     lecturer = StringField('Lecturer', validators=[InputRequired(), Length(min=2, max=50, message="Invalid Lecturer")])
     location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")])
 
-
+class NewExamForm(FlaskForm):
+    course_code = StringField('Course code', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course")])
+    weighting = IntegerField('Exam Weighting', validators=[InputRequired()])
+    date = DateField('Exam Date', validators=[InputRequired()], format = '%d/%m/%Y')
+    time = TimeField('Start Time', validators=[InputRequired()], format='%H:%M')
+    duration = IntegerField('Exam Duration (In hours)', validators=[InputRequired()])
+    location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")])

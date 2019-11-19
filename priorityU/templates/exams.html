@@ -49,6 +49,37 @@ Dashboard
              <li {% if request.endpoint == 'calendar' %} class="active" {% endif %} ><a href="{{url_for('calendar')}}">Calendar</a></li>
         </ul>
       </div>
+      <!-- Modified Dominic's Course listing script - Shereece 19/11 -->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Exam</h1>
+          <table class="table table-striped table-hover">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th>Course Code</th>
+                    <th>Exam Weighting</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Duration (Hours)</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in exams %}
+                <tr>
+                    <td>{{e.course_code}}</td>
+                    <td>{{e.weighting}}</td>
+                    <td>{{e.date}}</td>
+                    <td>{{e.time}}</td>
+                    <td>{{e.duration}}</td>
+                    <td>{{e.location}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+          <h4><a href="{{ url_for('addExam') }}">Add New Exam</a></h4>
+      </div>
     </div>
     </div>
 {% endblock %}
