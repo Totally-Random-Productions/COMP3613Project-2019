@@ -3,7 +3,7 @@ from flask import render_template, url_for, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from priorityU import app, db, login_manager
-from priorityU.models.models import User, Tasks, Courses
+from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
 from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm
 
 
@@ -22,13 +22,13 @@ db.create_all()
 #db.session.add(task)
 #db.session.commit()
 
-  
+
 #VIEWS
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -38,14 +38,14 @@ def login():
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('dashboard'))
         return '<h1>Invalid username or password combination</h1>'
-    return render_template('login.html',form=form)
+    return render_template('login.html', form=form)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data, method='sha256')
-        new_user = User(username=form.username.data, email=form.email.data,university=form.university.data, password=hashed_password)
+        new_user = User(username=form.username.data, email=form.email.data, university=form.university.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
@@ -64,7 +64,8 @@ def calendar():
 @app.route('/dashboard/courses')
 @login_required
 def courses():
-    return render_template('courses.html', name=current_user.username)
+    user_courses = Courses.query.filter_by(user_id=current_user.get_id()).order_by(Courses.course_code.desc()).all() # Dominic 18/11- user course data query
+    return render_template('courses.html', name=current_user.username, courses=user_courses)
 
 @app.route('/dashboard/courses/add', methods=['GET', 'POST'])
 @login_required
@@ -85,12 +86,14 @@ def completed():
 @app.route('/dashboard/exams')
 @login_required
 def exams():
-    return render_template('exams.html')
+    user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.desc()).all() # Dominic 18/11- user exam data query
+    return render_template('exams.html', exams=user_exams)
 
 @app.route('/dashboard/assignments')
 @login_required
 def assignments():
-    return render_template('assignments.html')
+    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.desc()).all() # Dominic 18/11- user assignment data query
+    return render_template('assignments.html', asgs=user_asgs)
 
 @app.route('/logout')
 @login_required
@@ -98,6 +101,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-if __name__ == '__main__':
+if __name__ == '__main__': # Dominic - is this necessary?
     app.run(debug=True)
     
