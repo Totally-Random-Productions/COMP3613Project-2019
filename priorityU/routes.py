@@ -4,9 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from priorityU import app, db, login_manager
 from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
-from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm
+from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm, NewExamForm
 
-from models.forms import NewExamForm
 
 
 @login_manager.user_loader
@@ -80,6 +79,14 @@ def addCourse():
         return redirect(url_for('courses'))
     return render_template('addCourse.html', form=form)
 
+@app.route('/dashboard/courses/<c_id>', methods=['GET', 'POST'])
+@login_required
+def deleteCourse(c_id):
+    course = Courses.query.filter_by(c_id=c_id).first()
+    db.session.delete(course)
+    db.session.commit()
+    return redirect(url_for('courses'))
+
 @app.route('/dashboard/completed')
 @login_required
 def completed():
@@ -88,7 +95,7 @@ def completed():
 @app.route('/dashboard/exams')
 @login_required
 def exams():
-    user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.desc()).all() # Dominic 18/11- user exam data query
+    user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all() # Dominic 18/11- user exam data query
     return render_template('exams.html', exams=user_exams)
 
 @app.route('/dashboard/exams/add', methods=['GET', 'POST'])
@@ -104,11 +111,28 @@ def addExam():
         return redirect(url_for('exams'))
     return render_template('addExam.html', form=form)
 
+@app.route('/dashboard/exams/<e_id>', methods=['GET', 'POST'])
+@login_required
+def deleteExam(e_id):
+    exam = Exam.query.filter_by(e_id=e_id).first()
+    db.session.delete(exam)
+    db.session.commit()
+    return redirect(url_for('exams'))
+
 @app.route('/dashboard/assignments')
 @login_required
 def assignments():
-    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.desc()).all() # Dominic 18/11- user assignment data query
+    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all() # Dominic 18/11- user assignment data query
     return render_template('assignments.html', asgs=user_asgs)
+
+
+@app.route('/dashboard/assignments/<a_id>', methods=['GET', 'POST'])
+@login_required
+def deleteAssignment(a_id):
+    assignment = Assignement.query.filter_by(a_id).first()
+    db.session.delete(assignment)
+    db.session.commit()
+    return redirect(url_for('assignments'))
 
 @app.route('/logout')
 @login_required

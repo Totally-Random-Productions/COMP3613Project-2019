@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\Angel\Documents\UWI 2019\COMP3613 Project\COMP3613Project-2019\priorityU\priorityU.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="priorityU [2]" uuid="015a1f77-8e2a-4fa5-b479-15d6f36fb9b2">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\Users\Dominic Smart\Documents\Schoolwork\COMP 3613\COMP3613Project-2019\priorityU\priorityU.db</jdbc-url>
+    </data-source>
   </component>
 </project>

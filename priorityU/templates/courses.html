@@ -54,7 +54,7 @@ Dashboard
             <!--Dominic Smart 18/11 - Start of code for printing courses-->
             <thead class="thead-dark">
                 <tr>
-                    <th>Code</th><th>Name</th><th>Lecturer</th><th>Location</th>
+                    <th>Code</th><th>Name</th><th>Lecturer</th><th>Location</th><th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,6 +64,9 @@ Dashboard
                     <td>{{c.course_name}}</td>
                     <td>{{c.lecturer}}</td>
                     <td>{{c.location}}</td>
+                    <td>
+                      <a href='/dashboard/courses/{{c.c_id}}' class="btn btn-primary">Delete</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

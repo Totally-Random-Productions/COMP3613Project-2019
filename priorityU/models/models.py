@@ -77,7 +77,7 @@ class Assignment(db.Model): # Dominic 18/11- created model for assignment db
 
     def __init__(self, course_code=None, asg_name=None, weighting = 0, due_date=None, complete=False, user_id=None):
         self.course_code = course_code
-        self. asg_name = asg_name
+        self.asg_name = asg_name
         self.weighting = weighting
         self.due_date = due_date
         self.complete = complete
@@ -87,7 +87,7 @@ class Assignment(db.Model): # Dominic 18/11- created model for assignment db
 class Exam(db.Model): # Dominic 18/11- created model for assignment db
     __tablename__ = 'exams'
 
-    a_id = db.Column(db.Integer, primary_key=True)
+    e_id = db.Column(db.Integer, primary_key=True)
     course_code = db.Column(db.String, db.ForeignKey('courses.course_code'))
     weighting = db.Column(db.Integer)
     date = db.Column(db.Date, nullable=False)
