@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %} 
  
 {% block title %} 
-Add Exams
+Add Assignments
 {% endblock %} 
  
 {% block styles %} 
@@ -14,16 +14,15 @@ Add Exams
 <div class="container"> 
  
   <form class="form-signin" method="POST"> 
-    <h2 class="form-signin-heading">Add Exam</h2>
+    <h2 class="form-signin-heading">Add Assignment</h2>
  
     {{ form.hidden_tag() }} 
     {{ wtf.form_field(form.course_code) }}
+    {{ wtf.form_field(form.asg_name) }}
     {{ wtf.form_field(form.weighting) }}
-    {{ wtf.form_field(form.date) }}
-    {{ wtf.form_field(form.time) }}
-    {{ wtf.form_field(form.duration) }}
-    {{ wtf.form_field(form.location) }} 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button> 
+    {{ wtf.form_field(form.due_date) }}
+    {{ wtf.form_field(form.due_time) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
   </form> 
  
 </div> <!-- /container --> 

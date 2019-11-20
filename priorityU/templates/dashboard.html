@@ -45,24 +45,115 @@ Dashboard
             <li {% if request.endpoint == 'courses' %} class="active" {% endif %}><a href="{{url_for('courses')}}" id="tab2-id">Courses</a></li>
             <li {% if request.endpoint == 'exams' %} class="active" {% endif %}><a href="{{url_for('exams')}}">Upcoming Exams</a></li>
             <li {% if request.endpoint == 'assignments' %} class="active" {% endif %}><a href="{{url_for('assignments')}}">Upcoming Assignments</a></li>
-            <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Tasks</a></li>
-            <li {% if request.endpoint == 'calendar' %} class="active" {% endif %} ><a href="{{url_for('calendar')}}">Calendar</a></li>
+            <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Assignments</a></li>
         </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome back, {{ name }}</h1>
-          <h2>Task Summary</h2>
-          <div class="row placeholders">
-              <div class="col-xs-6 col-sm-2 placeholder">
-                  <span class="t"> Courses: </span><br>
-                  <span> Upcoming Exams: </span><br>
-                  <span> Upcoming Assignments: </span><br>
-                  <span> Completed Tasks: </span>
-                </div>
-          </div>
           <h2>Alerts</h2>
           <!-- REMINDERS BASED ON PRIORITY FIGURES-->
         </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+           <table class="table table-striped table-hover">
+            <!--Dominic Smart 18/11 - Start of code for printing courses-->
+            <thead class="thead-dark">
+                <tr>
+                    <th></th><th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td><h3 class="page-header">Courses</h3>
+          <table class="table table-striped table-hover">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th>Code</th><th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in courses %}
+                <tr>
+                    <td>{{c.course_code}}</td>
+                    <td>{{c.course_name}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table></td>
+                <!-- End of Courses Section -->
+                    <td><h3 class="page-header">Exams</h3>
+          <table class="table table-striped table-hover">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th>Course Code</th>
+                    <th>Date</th>
+                    <th>Time</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in exams %}
+                <tr>
+                    <td>{{e.course_code}}</td>
+                    <td>{{e.date}}</td>
+                    <td>{{e.time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+</td>
+                </tr>
+                <tr>
+                    <td> <h3 class="page-header">Assignments</h3>
+        <table class="table table-striped table-hover">
+
+          <thead class="thead-dark">
+              <tr>
+                  <th>Course Code</th>
+                  <th>Name</th>
+                  <th>Due Date</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for a in assignments %}
+                {% if a.completed == FALSE %}
+              <tr>
+                  <td>{{a.course_code}}</td>
+                  <td>{{a.asg_name}}</td>
+                  <td>{{a.due_date}}</td>
+              </tr>
+                {% endif %}
+              {% endfor %}
+          </tbody>
+        </table></td>
+            <td><h3 class="page-header">Completed Assignments</h3>
+        <table class="table table-striped table-hover">
+
+          <thead class="thead-dark">
+              <tr>
+                  <th>Course Code</th>
+                  <th>Name</th>
+                  <th>Due Date</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for a in assignments %}
+                {% if a.completed == TRUE %}
+              <tr>
+                  <td>{{a.course_code}}</td>
+                  <td>{{a.asg_name}}</td>
+                  <td>{{a.due_date}}</td>
+              </tr>
+                {% endif %}
+              {% endfor %}
+          </tbody>
+        </table></td>
+                </tr>
+
+            </tbody>
+          </table>
       </div>
     </div>
 {% endblock %}

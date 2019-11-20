@@ -45,8 +45,7 @@ Dashboard
             <li {% if request.endpoint == 'courses' %} class="active" {% endif %}><a href="{{url_for('courses')}}" id="tab2-id">Courses</a></li>
             <li {% if request.endpoint == 'exams' %} class="active" {% endif %}><a href="{{url_for('exams')}}">Upcoming Exams</a></li>
             <li {% if request.endpoint == 'assignments' %} class="active" {% endif %}><a href="{{url_for('assignments')}}">Upcoming Assignments</a></li>
-            <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Tasks</a></li>
-             <li {% if request.endpoint == 'calendar' %} class="active" {% endif %} ><a href="{{url_for('calendar')}}">Calendar</a></li>
+            <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Assignments</a></li>
         </ul>
       </div>
       <!-- Modified Dominic's Course listing script - Shereece 19/11 -->

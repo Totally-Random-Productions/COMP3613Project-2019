@@ -45,10 +45,41 @@ Dashboard
             <li {% if request.endpoint == 'courses' %} class="active" {% endif %}><a href="{{url_for('courses')}}" id="tab2-id">Courses</a></li>
             <li {% if request.endpoint == 'exams' %} class="active" {% endif %}><a href="{{url_for('exams')}}">Upcoming Exams</a></li>
             <li {% if request.endpoint == 'assignments' %} class="active" {% endif %}><a href="{{url_for('assignments')}}">Upcoming Assignments</a></li>
-            <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Tasks</a></li>
-            <li {% if request.endpoint == 'calendar' %} class="active" {% endif %} ><a href="{{url_for('calendar')}}">Calendar</a></li>
+            <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Assignments</a></li>
         </ul>
       </div>
+      <!--Dominic Smart 19/11 - Added html for displaying assignment info-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Completed Assignments</h1>
+        <table class="table table-striped table-hover">
+
+          <thead class="thead-dark">
+              <tr>
+                  <th>Course Code</th>
+                  <th>Name</th>
+                  <th>Weighting</th>
+                  <th>Due Date</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for a in assignments %}
+                {% if a.completed == TRUE %}
+              <tr>
+                  <td>{{a.course_code}}</td>
+                  <td>{{a.asg_name}}</td>
+                  <td>{{a.weighting}}</td>
+                  <td>{{a.due_date}}</td>
+                  <td>
+                    <a href='/dashboard/assignments/{{a.a_id}}' class="btn btn-primary">Delete</a>
+                  </td>
+              </tr>
+                {% endif %}
+              {% endfor %}
+          </tbody>
+        </table>
+
+    </div>
     </div>
     </div>
 {% endblock %}

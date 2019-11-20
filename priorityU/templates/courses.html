@@ -44,8 +44,7 @@ Dashboard
               <li {% if request.endpoint == 'courses' %} class="active" {% endif %}><a href="{{url_for('courses')}}" id="tab2-id">Courses</a></li>
               <li {% if request.endpoint == 'exams' %} class="active" {% endif %}><a href="{{url_for('exams')}}">Upcoming Exams</a></li>
               <li {% if request.endpoint == 'assignments' %} class="active" {% endif %}><a href="{{url_for('assignments')}}">Upcoming Assignments</a></li>
-              <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Tasks</a></li>
-              <li {% if request.endpoint == 'calendar' %} class="active" {% endif %} ><a href="{{url_for('calendar')}}">Calendar</a></li>
+              <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Assignments</a></li>
           </ul>
         </div>
        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -72,7 +71,7 @@ Dashboard
             </tbody>
           </table>
           <!--Dominic Smart 18/11 - End of code for printing courses-->
-          <h2><a href="{{ url_for('addCourse') }}">Add New Course</a></h2>
+          <h4><a href="{{ url_for('addCourse') }}">Add New Course</a></h4>
       </div>
         </div>
       </div>

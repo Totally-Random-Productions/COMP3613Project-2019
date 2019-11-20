@@ -4,31 +4,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from priorityU import app, db, login_manager
 from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
-from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm,NewExamForm
+from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm, NewExamForm, NewAssignmentForm
 import datetime
 
 
- 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-#create tables
-db.create_all()
-
-#dummydata
-#course=Courses(course_code='COMP3613',course_name='TOC',lecturer='Mohan',location='TCB14',user_id='1')
-#task=Tasks(name='doit',due_date='',priority=5,status='c',user_id='1')
-
-#db.session.add(course)
-#db.session.add(task)
-#db.session.commit()
-
-
-#VIEWS
+# VIEWS
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -42,43 +30,50 @@ def login():
         return '<h1>Invalid username or password combination</h1>'
     return render_template('login.html', form=form)
 
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data, method='sha256')
-        new_user = User(username=form.username.data, email=form.email.data, university=form.university.data, password=hashed_password)
+        new_user = User(username=form.username.data, email=form.email.data,
+                        university=form.university.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', name=current_user.username)
+    user_courses = Courses.query.filter_by(user_id=current_user.get_id()).order_by(Courses.course_code.desc()).all()
+    user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all()
+    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
+    return render_template('dashboard.html', name=current_user.username, courses=user_courses, exams=user_exams,
+                           assignments=user_asgs)
 
-@app.route('/dashboard/calendar')
-@login_required
-def calendar():
-    return render_template('calendar.html')
 
 @app.route('/dashboard/courses')
 @login_required
 def courses():
-    user_courses = Courses.query.filter_by(user_id=current_user.get_id()).order_by(Courses.course_code.desc()).all() # Dominic 18/11- user course data query
+    user_courses = Courses.query.filter_by(user_id=current_user.get_id()).order_by(Courses.course_code.desc()).all()
+    # Dominic 18/11- user course data query
     return render_template('courses.html', name=current_user.username, courses=user_courses)
+
 
 @app.route('/dashboard/courses/add', methods=['GET', 'POST'])
 @login_required
 def addCourse():
     form = NewCourseForm()
     if form.validate_on_submit():
-        course = Courses(course_code=form.code.data, course_name=form.title.data, lecturer=form.lecturer.data, location=form.location.data, user_id=current_user.get_id())
+        course = Courses(course_code=form.code.data, course_name=form.title.data,
+                         lecturer=form.lecturer.data, location=form.location.data, user_id=current_user.get_id())
         db.session.add(course)
         db.session.commit()
         return redirect(url_for('courses'))
     return render_template('addCourse.html', form=form)
+
 
 @app.route('/dashboard/courses/<c_id>', methods=['GET', 'POST'])
 @login_required
@@ -88,16 +83,23 @@ def deleteCourse(c_id):
     db.session.commit()
     return redirect(url_for('courses'))
 
-@app.route('/dashboard/completed')
-@login_required
-def completed():
-    return render_template('completed.html')
 
 @app.route('/dashboard/exams')
 @login_required
 def exams():
-    user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all() # Dominic 18/11- user exam data query
+    user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all()
+    # Dominic 18/11- user exam data query
     return render_template('exams.html', exams=user_exams)
+
+
+@app.route('/dashboard/exams/<e_id>', methods=['GET', 'POST'])
+@login_required
+def deleteExam(e_id):
+    exam = Exam.query.filter_by(e_id=e_id).first()
+    db.session.delete(exam)
+    db.session.commit()
+    return redirect(url_for('exams'))
+
 
 @app.route('/dashboard/exams/add', methods=['GET', 'POST'])
 @login_required
@@ -112,31 +114,51 @@ def addExam():
         return redirect(url_for('exams'))
     return render_template('addExam.html', form=form)
 
-@app.route('/dashboard/assignments/add',methods=['GET','POST'])
-@login_required
-def addAssignments():
-    form = NewAssignmentForm()
-    if form.validate_on_submit():  # Needs too check if course exists first
-        assignment = Assignment(course_code=form.course_code.data, weighting=form.weighting.data,due_date=form.due_date.data, complete=form.complete.data,user_id=current_user.get_id())
-        db.session.add(assignment)
-        db.session.commit()
-        return redirect(url_for('assignments'))
-    return render_template('addAssignment.html', form=form)    
 
 @app.route('/dashboard/assignments')
 @login_required
 def assignments():
-    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all() # Dominic 18/11- user assignment data query
-    return render_template('assignments.html', asgs=user_asgs)
+    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
+    # Dominic 18/11- user assignment data query
+    return render_template('assignments.html', assignments=user_asgs)
+
+# Cannot be imported into form.py (Circular import) Idk anymore
+def findcourses():
+    result = Courses.query(Courses).all()
+    course_list = []
+    for i in result:
+        course_list.append(i.course_code)
+    return course_list
+
+
+@app.route('/dashboard/assignments/add', methods=['GET', 'POST'])
+@login_required
+def addAssignments():
+    form = NewAssignmentForm()
+    if form.validate_on_submit():  # Needs too check if course exists first
+        assignment = Assignment(course_code=form.course_code.data, asg_name=form.asg_name.data,
+                                weighting=form.weighting.data, due_date=form.due_date.data,
+                                due_time=form.due_time.data, user_id=current_user.get_id())
+        db.session.add(assignment)
+        db.session.commit()
+        return redirect(url_for('assignments'))
+    return render_template('addAssignments.html', form=form)
 
 
 @app.route('/dashboard/assignments/<a_id>', methods=['GET', 'POST'])
 @login_required
 def deleteAssignment(a_id):
-    assignment = Assignement.query.filter_by(a_id).first()
+    assignment = Assignment.query.filter_by(a_id=a_id).first()
     db.session.delete(assignment)
     db.session.commit()
     return redirect(url_for('assignments'))
+
+
+@app.route('/dashboard/completed')
+@login_required
+def completed():
+    return render_template('completed.html')
+
 
 @app.route('/logout')
 @login_required
@@ -145,7 +167,5 @@ def logout():
     return redirect(url_for('index'))
 
 
-
-if __name__ == '__main__': # Dominic - is this necessary?
+if __name__ == '__main__':  # Dominic - is this necessary?
     app.run(debug=True)
-    

@@ -22,10 +22,10 @@ class User(UserMixin, db.Model):
         self.university = university
 
     def __repr__(self):
-        return '<User %r>' %(self.name)
+        return '<User %r>' % self.name
 
 
-class Tasks(db.Model): #Dominic - is this necessary?
+class Tasks(db.Model):  # Dominic - is this necessary?
     __tablename__ = 'tasks'
 
     task_id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +43,7 @@ class Tasks(db.Model): #Dominic - is this necessary?
         self.status = status
 
     def __repr__(self):
-        return '<name %r>' % (self.body)
+        return '<name %r>' % self.body
 
 
 class Courses(db.Model):
@@ -72,14 +72,16 @@ class Assignment(db.Model): # Dominic 18/11- created model for assignment db
     asg_name = db.Column(db.String, nullable=False)
     weighting = db.Column(db.Integer)
     due_date = db.Column(db.Date, nullable=False)
+    due_time = db.Column(db.Time)
     complete = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, course_code=None, asg_name=None, weighting = 0, due_date=None, complete=False, user_id=None):
+    def __init__(self, course_code=None, asg_name=None, weighting = 0, due_date=None, due_time=None, complete=False, user_id=None):
         self.course_code = course_code
         self.asg_name = asg_name
         self.weighting = weighting
         self.due_date = due_date
+        self.due_time = due_time
         self.complete = complete
         self.user_id = user_id
 
