@@ -27,3 +27,11 @@ class NewExamForm(FlaskForm):
     time = TimeField('Start Time', validators=[InputRequired()], format='%H:%M')
     duration = IntegerField('Exam Duration (In hours)', validators=[InputRequired()])
     location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")])
+    
+class NewAssignmentForm(FlaskForm):
+    course_code = StringField('Course code', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course")])
+    asg_name = StringField('Assignment Name', validators=[InputRequired(), Length(min=1, max=50, message="Invalid Assignment Name")])
+    weighting =  IntegerField('Assignment Weighting', validators=[InputRequired()])
+    due_date = DateField('Exam Date', validators=[InputRequired()], format = '%d/%m/%Y')
+    complete =  BooleanField('Completed?')
+    

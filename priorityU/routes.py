@@ -4,10 +4,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 from priorityU import app, db, login_manager
 from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
-from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm, NewExamForm
+from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm,NewExamForm
+import datetime
 
 
-
+ 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -111,13 +112,16 @@ def addExam():
         return redirect(url_for('exams'))
     return render_template('addExam.html', form=form)
 
-@app.route('/dashboard/exams/<e_id>', methods=['GET', 'POST'])
+@app.route('/dashboard/assignments/add',methods=['GET','POST'])
 @login_required
-def deleteExam(e_id):
-    exam = Exam.query.filter_by(e_id=e_id).first()
-    db.session.delete(exam)
-    db.session.commit()
-    return redirect(url_for('exams'))
+def addAssignments():
+    form = NewAssignmentForm()
+    if form.validate_on_submit():  # Needs too check if course exists first
+        assignment = Assignment(course_code=form.course_code.data, weighting=form.weighting.data,due_date=form.due_date.data, complete=form.complete.data,user_id=current_user.get_id())
+        db.session.add(assignment)
+        db.session.commit()
+        return redirect(url_for('assignments'))
+    return render_template('addAssignment.html', form=form)    
 
 @app.route('/dashboard/assignments')
 @login_required
@@ -139,6 +143,8 @@ def deleteAssignment(a_id):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
 
 if __name__ == '__main__': # Dominic - is this necessary?
     app.run(debug=True)
