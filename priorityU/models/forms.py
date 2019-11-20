@@ -4,41 +4,61 @@ from wtforms.validators import InputRequired, Email, Length
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=30)])
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)],
+                           render_kw={"placeholder": "abcdefg"})
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=30)],
+                             render_kw={"placeholder": "********"})
     remember = BooleanField('Remember me')
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid Email'), Length(max=50)])
-    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=30)])
-    university = StringField('University', validators=[InputRequired(), Length(min=4, max=70)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid Email'), Length(max=50)],
+                        render_kw={"placeholder": "someone@email.com"})
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)],
+                           render_kw={"placeholder": "abcdefg"})
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=30)],
+                             render_kw={"placeholder": "********"})
+    university = StringField('University', validators=[InputRequired(), Length(min=4, max=70)],
+                             render_kw={"placeholder": "ConU"})
 
 
 class NewCourseForm(FlaskForm):
-    code = StringField('Course Code', validators=[InputRequired(), Length(min=8, max=8, message="Invalid Course Code")])
-    title = StringField('Course Title', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course")])
-    lecturer = StringField('Lecturer', validators=[InputRequired(), Length(min=2, max=50, message="Invalid Lecturer")])
-    location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")])
+    code = StringField('Course Code', validators=[InputRequired(), Length(min=6, max=9, message="Invalid Course Code")],
+                       render_kw={"placeholder": "COMP 354"})
+    title = StringField('Course Title', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course")],
+                        render_kw={"placeholder": "Software Engineering"})
+    lecturer = StringField('Lecturer', validators=[InputRequired(), Length(min=2, max=50, message="Invalid Lecturer")],
+                           render_kw={"placeholder": "Greg Butler"})
+    location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")],
+                           render_kw={"placeholder": "Hall Building rm 820"})
 
 
 class NewExamForm(FlaskForm):
-    course_code = StringField('Course code', validators=[InputRequired(),
-                                                         Length(min=4, max=50, message="Invalid Course")])
-    weighting = IntegerField('Exam Weighting', validators=[InputRequired()])
-    date = DateField('Exam Date', validators=[InputRequired()], format='%d/%m/%Y')
+    course_code = StringField('Course code', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course"
+                                                                                 )],
+                              render_kw={"placeholder": "COMP 354"})
+    weighting = IntegerField('Exam Weighting (%)', validators=[InputRequired()],
+                             render_kw={"placeholder": "100"})
+    date = DateField('Exam Date', validators=[InputRequired()], format='%d/%m/%Y',
+                     render_kw={"placeholder": "dd/mm/yyyy"})
     time = TimeField('Start Time', validators=[InputRequired()], format='%H:%M')
-    duration = IntegerField('Exam Duration (In hours)', validators=[InputRequired()])
-    location = StringField('Location', validators=[InputRequired(),
-                                                   Length(min=2, max=20, message="Invalid Location")])
+    duration = IntegerField('Exam Duration (In hours)', validators=[InputRequired(message = 'Please enter whole '
+                                                                                            'number values'), ],
+                            render_kw={"placeholder": "HH"})
+    location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")],
+                           render_kw={"placeholder": "Hall Building rm 820"})
 
 
 class NewAssignmentForm(FlaskForm):
-    course_code = StringField('Course code', validators=[InputRequired(),
-                                                         Length(min=4, max=50, message="Invalid Course")])
-    asg_name = StringField('Assignment Name', validators=[InputRequired(),
-                                                          Length(min=1, max=50, message="Invalid Assignment Name")])
-    weighting = IntegerField('Assignment Weighting', validators=[InputRequired()])
-    due_date = DateField('Due Date', validators=[InputRequired()], format='%d/%m/%Y')
-    due_time = TimeField('Due Time', validators=[InputRequired()], format='%H:%M')
+    course_code = StringField('Course code', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course"
+                                                                                 )],
+                              render_kw={"placeholder": "COMP 354"})
+    asg_name = StringField('Assignment Name', validators=[InputRequired(), Length(min=1, max=50,
+                                                                                  message="Invalid Assignment Name")],
+                           render_kw={"placeholder": "Assignment 1"})
+    weighting = IntegerField('Assignment Weighting', validators=[InputRequired()],
+                             render_kw={"placeholder": "100"})
+    due_date = DateField('Due Date', validators=[InputRequired()], format='%d/%m/%Y',
+                         render_kw={"placeholder": "dd/mm/yyyy"})
+    due_time = TimeField('Due Time', validators=[InputRequired()], format='%H:%M',
+                         render_kw={"placeholder": "dd/mm/yyyy"})

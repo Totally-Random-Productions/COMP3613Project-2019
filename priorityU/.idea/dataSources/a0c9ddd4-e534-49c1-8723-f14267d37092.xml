@@ -298,13 +298,11 @@
     <index id="74" parent="12" name="sqlite_autoindex_users_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="75" parent="12" name="sqlite_autoindex_users_2">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>email</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="76" parent="12">
