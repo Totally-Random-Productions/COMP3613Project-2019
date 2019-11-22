@@ -1,0 +1,30 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {english}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Theory - Software Process}{3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.1}Software Performance Metrics (SPM) }{3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.2}The Goal-Question-Metric Paradigm }{3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.3}The Five Stages in the Process change process}{5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.4}Process Improvement Models (PIMs)}{6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Software Engineering Tools and Requirements}{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}Software Configuration Management (SCM)}{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}Assessing SaaS for Continuous Integration }{8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3}Requirements Tracing}{9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Theory - Software Design and Construction}{10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}Defensive Coding Practices}{10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}Secure Coding}{11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}Robust/Fault Tolerant Programs}{11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}References}{13}% 
