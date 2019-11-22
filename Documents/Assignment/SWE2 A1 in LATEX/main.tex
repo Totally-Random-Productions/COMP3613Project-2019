@@ -75,15 +75,23 @@
     Defensive coding is a form of defensive design intended to ensure the continuing function of a piece of software under unforeseen circumstances. These are most often used in environments where high security, availability, or safety are required.
     Common defensive coding practices are - 
     \begin{enumerate}
-        \item Never trust user input
-        Assume always you’re going to receive something you don’t expect. Assert that your input values are what you expect.
-        \item Do not reinvent the wheel
-        Do not waste time on inventing something yourself when there are frameworks available for use that can ease the process via code reuse.
-        \item Do not trust developers
-        Developers should not trust other developer’s code. Enforce coding styles and mess detector to make life easier.
-        \item Write using SOLID principles 
-        \item Write tests
-        Writing unit tests will help you adhering to common principles such as High Cohesion, Single Responsibility, Low Coupling and right object composition.
+        \item Validation \newline
+        The basic premise behind the concept of input validation is “Do not trust without verifying.” Assume always you’re going to receive something you don’t expect. Two methods of validation are whitelisting and blacklisting.
+        
+        \item Code Access Security \newline
+        Code Access Security prevents the code from untrustworthy sources comprising run-time permissions to function privileged operations. It also prevents the code from the trusted sources against intentionally or unintentionally comprising the security.
+        
+        \item Container Versus Component\newline
+        Declarative security or container security offers a container managed strategy to ensure software flexibility, portability, and low deployment cost. Here, the security rules are configured outside the source code as a part of the deployment descriptor. The application container, or constraints, oversee applying dynamic security constraints to the code whereas programmatic or component security embeds the security rules in code or component itself. It involves a granular approach to implement security. When using this security, the programmatic enforcement is embedded in the application along with programmatic validation on policies to find, what a valid user is allowed to access. 
+        
+        \item Cryptographic Agility \newline
+        Cryptographic Agility is the capability of the code to switch to standard or recommended algorithms from insecure algorithms.
+        
+        \item Attack Surface Evaluation and Reduction \newline
+        The attack surface is defined as the various points where a hacker can get into the software and can achieve data access. The attack surface evaluation is the process of understanding the areas of risks in the software, to make security specialists and developers aware about the regions of software that are vulnerable to attacks and determine methods to reduce this.
+        
+        \item Memory Management \newline
+        Secure Memory Management can safeguard the revelation of data when it is processed. To implement proper memory management, it is important to follow some memory management concept. 
     \end{enumerate}
     \item Secure Coding:
     

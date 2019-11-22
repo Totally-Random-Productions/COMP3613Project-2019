@@ -1,0 +1,5 @@
+@misc{adams_2017, title={Defensive Coding Best Practices: A CEO's Perspective - DZone Security}, url={https://dzone.com/articles/defensive-coding-best-practices-a-ceos-perspective}, journal={dzone.com}, author={Adams, Ed}, year={2017}, month={Oct}}
+
+@misc{top 10 secure coding practices - cert secure coding - confluence, title={Confluence}, url={https://wiki.sei.cmu.edu/confluence/display/seccode/Top 10 Secure Coding Practices}, journal={Top 10 Secure Coding Practices - CERT Secure Coding - Confluence}}
+
+@misc{hack2secure, title={Defensive Application Coding Practices Secrets}, url={https://www.hack2secure.com/blogs/defensive-application-coding-practices-secrets}, journal={hack2secure}}
