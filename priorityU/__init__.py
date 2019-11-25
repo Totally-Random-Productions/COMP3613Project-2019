@@ -16,3 +16,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 from priorityU import routes
+from priorityU.models.models import *
+
+db.create_all()
+db.session.commit()

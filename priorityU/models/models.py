@@ -12,7 +12,6 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String, nullable=False)
     last_task_id = db.Column(db.Integer)
     university = db.Column(db.String, nullable=False)
-    tasks = db.relationship('Tasks', backref='poster')
     courses = db.relationship('Courses', backref='poster')
 
     def __init__(self, username=None, email=None, password=None, university=None):
@@ -90,6 +89,7 @@ class Exam(db.Model): # Dominic 18/11- created model for assignment db
     __tablename__ = 'exams'
 
     e_id = db.Column(db.Integer, primary_key=True)
+    exam_name=db.Column(db.String, nullable=False)
     course_code = db.Column(db.String, db.ForeignKey('courses.course_code'))
     weighting = db.Column(db.Integer)
     date = db.Column(db.Date, nullable=False)
@@ -98,8 +98,9 @@ class Exam(db.Model): # Dominic 18/11- created model for assignment db
     location = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, course_code=None, weighting=0, date=None, time=None, duration=None, location=None, user_id=None):
+    def __init__(self, course_code=None,exam_name=None, weighting=0, date=None, time=None, duration=None, location=None, user_id=None):
         self.course_code = course_code
+        self.exam_name=exam_name
         self.weighting = weighting
         self.date = date
         self.time = time

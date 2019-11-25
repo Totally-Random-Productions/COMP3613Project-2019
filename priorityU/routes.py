@@ -7,6 +7,13 @@ from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
 from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm, NewExamForm, NewAssignmentForm
 import datetime
 
+'''
+Jerrel
+24/11/19 added update routes for exams and assignments, and edit and add states that 
+would correspond to the forms that serve those routes. Jinja2 templates in html edited to accompany these
+changes and has rendered addCourses, addExams, addAssignments etc. superfluous 
+'''
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -59,7 +66,7 @@ def dashboard():
 def courses():
     user_courses = Courses.query.filter_by(user_id=current_user.get_id()).order_by(Courses.course_code.desc()).all()
     # Dominic 18/11- user course data query
-    return render_template('courses.html', name=current_user.username, courses=user_courses)
+    return render_template('courses.html', name=current_user.username, courses=user_courses,add_state=False,edit_state=False, form=None)
 
 
 @app.route('/dashboard/courses/add', methods=['GET', 'POST'])
@@ -72,7 +79,7 @@ def addCourse():
         db.session.add(course)
         db.session.commit()
         return redirect(url_for('courses'))
-    return render_template('addCourse.html', form=form)
+    return render_template('courses.html', form=form,add_state=True)
 
 
 @app.route('/dashboard/courses/<c_id>', methods=['GET', 'POST'])
@@ -89,8 +96,20 @@ def deleteCourse(c_id):
 def exams():
     user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all()
     # Dominic 18/11- user exam data query
-    return render_template('exams.html', exams=user_exams)
+    return render_template('exams.html', exams=user_exams,form=None, edit_state=False,add_state=False)
 
+@app.route('/dashboard/updateexam/<e_id>', methods=['GET','POST'])
+@login_required
+def updateExam(e_id):
+    edit_state=True
+    e = Exam.query.get(e_id)
+    form = NewExamForm(course_code=e.course_code,exam_name=e.exam_name, weighting=e.weighting, date=e.date,time=e.time,duration=e.duration,location=e.location)
+
+    if form.validate_on_submit():
+        Exam.query.filter_by(e_id=e_id).update(dict(course_code=form.course_code.data, exam_name=form.exam_name.data,weighting=form.weighting.data,date=form.date.data,duration=form.duration.data,location=form.location.data))
+        db.session.commit()
+        return redirect(url_for('exams'))
+    return render_template("exams.html", edit_state=True, form=form)
 
 @app.route('/dashboard/exams/<e_id>', methods=['GET', 'POST'])
 @login_required
@@ -106,13 +125,13 @@ def deleteExam(e_id):
 def addExam():
     form = NewExamForm()
     if form.validate_on_submit():  # Needs too check if course exists first
-        exam = Exam(course_code=form.course_code.data, weighting=form.weighting.data,
+        exam = Exam(course_code=form.course_code.data,exam_name=form.exam_name.data, weighting=form.weighting.data,
                     date=form.date.data, time=form.time.data, duration=form.duration.data,
                     user_id=current_user.get_id())
         db.session.add(exam)
         db.session.commit()
         return redirect(url_for('exams'))
-    return render_template('addExam.html', form=form)
+    return render_template('exams.html', add_state=True,edit_state=False,form=form)
 
 
 @app.route('/dashboard/assignments')
@@ -120,7 +139,7 @@ def addExam():
 def assignments():
     user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
     # Dominic 18/11- user assignment data query
-    return render_template('assignments.html', assignments=user_asgs)
+    return render_template('assignments.html', assignments=user_asgs, edit_state=False,add_state=False,form=None)
 
 # Cannot be imported into form.py (Circular import) Idk anymore
 def findcourses():
@@ -129,7 +148,6 @@ def findcourses():
     for i in result:
         course_list.append(i.course_code)
     return course_list
-
 
 @app.route('/dashboard/assignments/add', methods=['GET', 'POST'])
 @login_required
@@ -142,7 +160,20 @@ def addAssignments():
         db.session.add(assignment)
         db.session.commit()
         return redirect(url_for('assignments'))
-    return render_template('addAssignments.html', form=form)
+    return render_template('assignments.html',eidt_state=True,add_state=False, form=form)
+
+@app.route('/dashboard/updateassignment/<a_id>', methods=['GET','POST'])
+@login_required
+def updateAssignment(a_id):
+    edit_state=True
+    a = Assignment.query.get(a_id)
+    form = NewAssignmentForm(course_code=a.course_code,asg_name=a.asg_name, weighting=a.weighting, due_date=a.due_date,due_time=a.due_time)
+
+    if form.validate_on_submit():
+        Assignment.query.filter_by(a_id=a_id).update(dict(course_code=form.course_code.data, asg_name=form.asg_name.data,weighting=form.weighting.data,due_date=form.due_date.data,due_time=form.due_time.data))
+        db.session.commit()
+        return redirect(url_for('assignments'))
+    return render_template("assignments.html", edit_state=True, form=form)
 
 
 @app.route('/dashboard/assignments/<a_id>', methods=['GET', 'POST'])
@@ -152,7 +183,6 @@ def deleteAssignment(a_id):
     db.session.delete(assignment)
     db.session.commit()
     return redirect(url_for('assignments'))
-
 
 @app.route('/dashboard/completed')
 @login_required
@@ -169,3 +199,4 @@ def logout():
 
 if __name__ == '__main__':  # Dominic - is this necessary?
     app.run(debug=True)
+
