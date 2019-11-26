@@ -48,6 +48,7 @@
       <Position>7</Position>
       <DataType>BOOLEAN|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>FALSE</DefaultExpression>
     </column>
     <column id="18" parent="6" name="user_id">
       <Position>8</Position>

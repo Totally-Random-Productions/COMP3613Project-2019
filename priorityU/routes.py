@@ -98,18 +98,20 @@ def exams():
     # Dominic 18/11- user exam data query
     return render_template('exams.html', exams=user_exams,form=None, edit_state=False,add_state=False)
 
+
 @app.route('/dashboard/updateexam/<e_id>', methods=['GET','POST'])
 @login_required
 def updateExam(e_id):
     edit_state=True
     e = Exam.query.get(e_id)
-    form = NewExamForm(course_code=e.course_code,exam_name=e.exam_name, weighting=e.weighting, date=e.date,time=e.time,duration=e.duration,location=e.location)
+    form = NewExamForm(course_code=e.course_code, exam_name=e.exam_name, weighting=e.weighting, date=e.date, time=e.time, duration=e.duration,location=e.location)
 
     if form.validate_on_submit():
-        Exam.query.filter_by(e_id=e_id).update(dict(course_code=form.course_code.data, exam_name=form.exam_name.data,weighting=form.weighting.data,date=form.date.data,duration=form.duration.data,location=form.location.data))
+        Exam.query.filter_by(e_id=e_id).update(dict(course_code=form.course_code.data, exam_name=form.exam_name.data, weighting=form.weighting.data,date=form.date.data,duration=form.duration.data,location=form.location.data))
         db.session.commit()
         return redirect(url_for('exams'))
     return render_template("exams.html", edit_state=True, form=form)
+
 
 @app.route('/dashboard/exams/<e_id>', methods=['GET', 'POST'])
 @login_required
@@ -125,13 +127,13 @@ def deleteExam(e_id):
 def addExam():
     form = NewExamForm()
     if form.validate_on_submit():  # Needs too check if course exists first
-        exam = Exam(course_code=form.course_code.data,exam_name=form.exam_name.data, weighting=form.weighting.data,
+        exam = Exam(course_code=form.course_code.data, exam_name=form.exam_name.data, weighting=form.weighting.data,
                     date=form.date.data, time=form.time.data, duration=form.duration.data,
                     user_id=current_user.get_id())
         db.session.add(exam)
         db.session.commit()
         return redirect(url_for('exams'))
-    return render_template('exams.html', add_state=True,edit_state=False,form=form)
+    return render_template('exams.html', add_state=True, edit_state=False,form=form)
 
 
 @app.route('/dashboard/assignments')
@@ -139,7 +141,7 @@ def addExam():
 def assignments():
     user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
     # Dominic 18/11- user assignment data query
-    return render_template('assignments.html', assignments=user_asgs, edit_state=False,add_state=False,form=None)
+    return render_template('assignments.html', assignments=user_asgs, edit_state=False, add_state=False, form=None)
 
 # Cannot be imported into form.py (Circular import) Idk anymore
 def findcourses():
@@ -160,7 +162,7 @@ def addAssignments():
         db.session.add(assignment)
         db.session.commit()
         return redirect(url_for('assignments'))
-    return render_template('assignments.html',eidt_state=True,add_state=False, form=form)
+    return render_template('assignments.html',eidt_state=True, add_state=False, form=form)
 
 @app.route('/dashboard/updateassignment/<a_id>', methods=['GET','POST'])
 @login_required
@@ -176,6 +178,14 @@ def updateAssignment(a_id):
     return render_template("assignments.html", edit_state=True, form=form)
 
 
+@app.route('/dashboard/markcomplete/<a_id>', methods=['GET', 'POST'])
+@login_required
+def markCompleteAssignment(a_id):
+    Assignment.query.filter_by(a_id=a_id).update(dict(complete=True))
+    db.session.commit()
+    return redirect(url_for('assignments'))
+
+
 @app.route('/dashboard/assignments/<a_id>', methods=['GET', 'POST'])
 @login_required
 def deleteAssignment(a_id):
@@ -187,7 +197,9 @@ def deleteAssignment(a_id):
 @app.route('/dashboard/completed')
 @login_required
 def completed():
-    return render_template('completed.html')
+    user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
+    # Dominic 18/11- user assignment data query
+    return render_template('completed.html', assignments=user_asgs, edit_state=False, add_state=False, form=None)
 
 
 @app.route('/logout')

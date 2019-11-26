@@ -26,13 +26,8 @@ Dashboard
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
         </div>
       </div>
     </nav>
@@ -64,7 +59,7 @@ Dashboard
           </thead>
           <tbody>
               {% for a in assignments %}
-                {% if a.completed == TRUE %}
+                {% if a.complete == True %}
               <tr>
                   <td>{{a.course_code}}</td>
                   <td>{{a.asg_name}}</td>

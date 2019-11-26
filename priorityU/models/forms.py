@@ -3,7 +3,8 @@ from wtforms import StringField, PasswordField, BooleanField, TimeField, DateFie
 from wtforms.validators import InputRequired, Email, Length, ValidationError
 from priorityU.models.models import *
 
-#JERREL: ADDED CUSTOM VALIDATORS FOR REGISTRATION, EXAM AND ASSIGNMENT FORMS 24/11/19
+
+# JERREL: ADDED CUSTOM VALIDATORS FOR REGISTRATION, EXAM AND ASSIGNMENT FORMS 24/11/19
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)],
                            render_kw={"placeholder": "abcdefg"})
@@ -22,17 +23,17 @@ class RegisterForm(FlaskForm):
     university = StringField('University', validators=[InputRequired(), Length(min=4, max=70)],
                              render_kw={"placeholder": "ConU"})
 
-    def validate_email(self,email):
+
+    def validate_email(self, email):
       e = bool(User.query.filter_by(email=email.data).first())
       if e == True:
         raise ValidationError("Email already affiliated with an account.")
 
-    def validate_username(self,username):
+
+    def validate_username(self, username):
       u = bool(User.query.filter_by(username=username.data).first())
       if u == True:
         raise ValidationError("User name already taken.")
-
-
 
 
 class NewCourseForm(FlaskForm):
@@ -62,7 +63,7 @@ class NewExamForm(FlaskForm):
     location = StringField('Location', validators=[InputRequired(), Length(min=2, max=20, message="Invalid Location")],
                            render_kw={"placeholder": "Hall Building rm 820"})
 
-    def validate_course_code(self,course_code):
+    def validate_course_code(self, course_code):
        c =bool(Courses.query.filter_by(course_code=course_code.data).first())
        if c == False:
         raise ValidationError("It doesn't look like that Course exists...")
