@@ -24,27 +24,6 @@ class User(UserMixin, db.Model):
         return '<User %r>' % self.name
 
 
-class Tasks(db.Model):  # Dominic - is this necessary?
-    __tablename__ = 'tasks'
-
-    task_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    due_date = db.Column(db.String, nullable=False)
-    priority = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.String)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __init__(self, name, due_date, priority, status, user_id):
-        self.name = name
-        self.due_date = due_date
-        self.priority = priority
-        self.user_id = user_id
-        self.status = status
-
-    def __repr__(self):
-        return '<name %r>' % self.body
-
-
 class Courses(db.Model):
     __tablename__ = 'courses'
 
