@@ -42,10 +42,12 @@ Dashboard
               <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Assignments</a></li>
           </ul>
         </div>
+
        {% if add_state and form %}
        <div class="col-sm-4 col-md-offset-2 main">
          <form class="form-signin" method="POST"> 
-            <h2 class="form-signin-heading">Add Course</h2> 
+            <h2 class="form-signin-heading">Add Course</h2>
+
             {{ form.hidden_tag() }} 
             {{ wtf.form_field(form.code) }} 
             {{ wtf.form_field(form.title) }} 
@@ -53,16 +55,17 @@ Dashboard
             {{ wtf.form_field(form.location) }} 
             <button class="btn btn-sm btn-primary" type="submit">Create</button> 
             <a href="{{ url_for('courses') }}">Cancel</a>
-         </form> 
+         </form>
+
        <div class="col-sm-4 col-md-offset-2 main">
        {% else %}
        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Courses</h1>
           <table class="table table-striped table-hover">
-            <!--Dominic Smart 18/11 - Start of code for printing courses-->
+
             <thead class="thead-dark">
                 <tr>
-                    <th>Code</th><th>Name</th><th>Lecturer</th><th>Location</th><th>Delete</th>
+                    <th>Code</th><th>Name</th><th>Lecturer</th><th>Location</th><th></th>
                 </tr>
             </thead>
             <tbody>
@@ -73,10 +76,10 @@ Dashboard
                     <td>{{c.lecturer}}</td>
                     <td>{{c.location}}</td>
                     <td>
-                      <a href='/dashboard/assignments/{{c.c_id}}' class="btn btn-secondary btn-sm">Delete</a>
+                      <a href='#' class="btn btn-secondary btn-sm">Update</a>
                     </td>
                     <td>
-                      <a href='#' class="btn btn-secondary btn-sm">Update</a>
+                      <a href='/dashboard/assignments/{{c.c_id}}' class="btn btn-secondary btn-sm">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -88,4 +91,5 @@ Dashboard
       {% endif %}
       </div>
     </div>
+      </div>
 {% endblock %}

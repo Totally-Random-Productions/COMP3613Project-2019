@@ -1,8 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block header %}
-<meta name="google" content="notranslate">
-{% endblock %}
+
 {% block title %}
 Dashboard
 {% endblock %}
@@ -44,10 +42,10 @@ Dashboard
             <li {% if request.endpoint == 'completed' %} class="active" {% endif %} ><a href="{{url_for('completed')}}">Completed Assignments</a></li>
         </ul>
       </div>
-      <!--Dominic Smart 19/11 - Added html for displaying assignment info-->
+
+
       {% if not add_state  and form != None %}
-      <form class="form-signin" method="POST"> 
-          <div class="col-sm-4 col-md-offset-2 main">
+      <form class="form-signin" method="POST">
             <h2 class="form-signin-heading">Add Assignment</h2>
          
             {{ form.hidden_tag() }} 
@@ -58,8 +56,8 @@ Dashboard
             {{ wtf.form_field(form.due_time) }}
             <button class="btn btn-lg btn-primary btn-sm" type="submit">Create</button>
             <a href="{{ url_for('assignments') }}">Back</a>
-          </div>
-       </form> 
+       </form>
+
       {% elif not edit_state and form != None %}
       <form class="form-signin" method="POST"> 
           <div class="col-sm-4 col-md-offset-2 main">
@@ -100,14 +98,14 @@ Dashboard
                   <td>{{a.weighting}}</td>
                   <td>{{a.due_date}}</td>
                   <td>{{a.due_time}}</td>
-                  <td>
-                    <a href='/dashboard/assignments/{{a.a_id}}' class="btn btn-secondary btn-sm">Delete</a>
+                   <td>
+                    <a href='/dashboard/markcomplete/{{a.a_id}}' class="btn btn-secondary btn-sm">Mark Complete</a>
                   </td>
                   <td>
                     <a href='/dashboard/updateassignment/{{a.a_id}}' class="btn btn-secondary btn-sm">Update</a>
                   </td>
-                  <td>
-                    <a href='/dashboard/markcomplete/{{a.a_id}}' class="btn btn-secondary btn-sm">Mark Complete</a>
+                 <td>
+                    <a href='/dashboard/assignments/{{a.a_id}}' class="btn btn-secondary btn-sm">Delete</a>
                   </td>
               </tr>
                 {% endif %}

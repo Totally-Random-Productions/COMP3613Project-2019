@@ -63,7 +63,6 @@ Dashboard
 			    </div>
 		   </form> 
 		  {% elif not add_state and form != None %}
-		    <div class="col-sm-4 col-md-offset-2 main">
 				<form class="form-signin" method="POST"> 
 					<h2 class="form-signin-heading">Update Exam Entry</h2>
 					{{ form.hidden_tag() }} 
@@ -76,8 +75,7 @@ Dashboard
 					{{ wtf.form_field(form.location) }}
 					<button class="btn btn-primary btn-sm" type="submit">Update</button> 
 					<a href="{{	url_for('exams') }}" role="button" class="btn btn-secondary btn-sm" >Cancel</a>
-				</form> 
-		   </div>
+				</form>
 
 		  {% else %}
 		  <!-- Modified Dominic's Course listing script - Shereece 19/11 -->
@@ -107,10 +105,10 @@ Dashboard
 						<td>{{e.duration}}</td>
 						<td>{{e.location}}</td>
 						<td>
-						  <a href='/dashboard/exams/{{e.e_id}}' class="btn btn-secondary">Delete</a>
+						   <a href='/dashboard/updateexam/{{e.e_id}}' class="btn btn-secondary">Update</a>
 						</td>
 						<td>
-						   <a href='/dashboard/updateexam/{{e.e_id}}' class="btn btn-secondary">Update</a>
+						  <a href='/dashboard/exams/{{e.e_id}}' class="btn btn-secondary">Delete</a>
 						</td>
 					</tr>
 					{% endfor %}

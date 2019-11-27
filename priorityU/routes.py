@@ -143,13 +143,6 @@ def assignments():
     # Dominic 18/11- user assignment data query
     return render_template('assignments.html', assignments=user_asgs, edit_state=False, add_state=False, form=None)
 
-# Cannot be imported into form.py (Circular import) Idk anymore
-def findcourses():
-    result = Courses.query(Courses).all()
-    course_list = []
-    for i in result:
-        course_list.append(i.course_code)
-    return course_list
 
 @app.route('/dashboard/assignments/add', methods=['GET', 'POST'])
 @login_required
@@ -163,6 +156,7 @@ def addAssignments():
         db.session.commit()
         return redirect(url_for('assignments'))
     return render_template('assignments.html',eidt_state=True, add_state=False, form=form)
+
 
 @app.route('/dashboard/updateassignment/<a_id>', methods=['GET','POST'])
 @login_required
@@ -194,12 +188,22 @@ def deleteAssignment(a_id):
     db.session.commit()
     return redirect(url_for('assignments'))
 
+
 @app.route('/dashboard/completed')
 @login_required
 def completed():
     user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
     # Dominic 18/11- user assignment data query
     return render_template('completed.html', assignments=user_asgs, edit_state=False, add_state=False, form=None)
+
+
+@app.route('/dashboard/completed/<a_id>', methods=['GET', 'POST'])
+@login_required
+def deleteCompleted(a_id):
+    assignment = Assignment.query.filter_by(a_id=a_id).first()
+    db.session.delete(assignment)
+    db.session.commit()
+    return redirect(url_for('completed'))
 
 
 @app.route('/logout')
