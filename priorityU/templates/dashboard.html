@@ -56,7 +56,7 @@ Dashboard
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h2>Alerts</h2>
           {% if num_tasks > 0 %}
-          <button data-toggle="collapse" data-target="#alert" class="collapsible btn btn-danger btn-sm"> DUE IN 5 DAYS</button>
+          <button data-toggle="collapse" data-target="#alert" class="btn btn-danger btn-sm"> DUE IN 5 DAYS</button>
           <div id="alert" class="collapse">
             <div class="row">
               <div class="col-xs-12">
@@ -73,6 +73,7 @@ Dashboard
                     {% endif %}
                   </ul>
               </div>
+            </div>
             {% else %}
             <p class="success"> No major task due soon </p>
             </div>
