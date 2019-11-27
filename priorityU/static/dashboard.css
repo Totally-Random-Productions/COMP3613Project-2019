@@ -92,6 +92,29 @@ body {
  .t{
    text-align: left;
  }
+
+.collapsible
+{
+  background-color: #eee;
+  color: #444;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 150px;
+}
+
+.active, .collapsible:hover{
+  background-color: #ccc;
+}
+.content{
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
 .placeholders {
   margin-bottom: 30px;
   text-align: left;

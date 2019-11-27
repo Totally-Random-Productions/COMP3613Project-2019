@@ -11,6 +11,8 @@ Dashboard
 <link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
 {% endblock %}
 
+<script type="text/javascript" src="{{url_for('.static', filename='js.js')}}"></script>
+
 {% block content %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -50,9 +52,35 @@ Dashboard
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome back, {{ name }}</h1>
-          <h2>Alerts</h2>
-          <!-- REMINDERS BASED ON PRIORITY FIGURES-->
         </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h2>Alerts</h2>
+          {% if num_tasks > 0 %}
+          <button data-toggle="collapse" data-target="#alert" class="collapsible btn btn-danger btn-sm"> DUE IN 5 DAYS</button>
+          <div id="alert" class="collapse">
+            <div class="row">
+              <div class="col-xs-12">
+                  <ul>
+                    {% if asg_alerts %}
+                    {% for asg in asg_alerts %}
+                    <li>[Assignment] {{asg.asg_name}} for {{asg.course_code}} at {{asg.due_time}}</li>
+                    {% endfor %}
+                    {% endif %}
+                    {% if exam_alerts %}
+                    {% for exam in exam_alerts %}
+                    <li>[Examination]{{exam.exam_name}} for {{exam.course_code}} at {{exam.location}}</li>
+                    {% endfor %}
+                    {% endif %}
+                  </ul>
+              </div>
+            {% else %}
+            <p class="success"> No major task due soon </p>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+          <!-- REMINDERS BASED ON PRIORITY FIGURES-->
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
            <table class="table table-striped table-hover">
             <!--Dominic Smart 18/11 - Start of code for printing courses-->

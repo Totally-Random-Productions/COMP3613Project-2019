@@ -5,7 +5,10 @@ from flask_login import login_user, logout_user, current_user, login_required
 from priorityU import app, db, login_manager
 from priorityU.models.models import User, Tasks, Courses, Assignment, Exam
 from priorityU.models.forms import LoginForm, RegisterForm, NewCourseForm, NewExamForm, NewAssignmentForm
-import datetime
+from datetime import date
+from datetime import time
+from datetime import datetime, timedelta
+
 
 '''
 Jerrel
@@ -13,6 +16,7 @@ Jerrel
 would correspond to the forms that serve those routes. Jinja2 templates in html edited to accompany these
 changes and has rendered addCourses, addExams, addAssignments etc. superfluous 
 '''
+    
 
 
 @login_manager.user_loader
@@ -57,8 +61,16 @@ def dashboard():
     user_courses = Courses.query.filter_by(user_id=current_user.get_id()).order_by(Courses.course_code.desc()).all()
     user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all()
     user_asgs = Assignment.query.filter_by(user_id=current_user.get_id()).order_by(Assignment.due_date.asc()).all()
+    #filter_after = datetime.now() - timedelta(days=5)
+    today = datetime.today()
+    alert_date = today + timedelta(days=5)
+    #asg_alerts = Assignment.query.filter(Assignment.due_date <= filter_after).all()
+    asg_alerts = Assignment.query.filter(Assignment.due_date >= alert_date).all()
+    exam_alerts = Exam.query.filter(Assignment.due_date >= alert_date).all()
+    num_tasks = len(asg_alerts) + len(exam_alerts)
+
     return render_template('dashboard.html', name=current_user.username, courses=user_courses, exams=user_exams,
-                           assignments=user_asgs)
+                           assignments=user_asgs,asg_alerts=asg_alerts, exam_alerts=exam_alerts,num_tasks=num_tasks)
 
 
 @app.route('/dashboard/courses')
@@ -117,16 +129,15 @@ def deleteExam(e_id):
     exam = Exam.query.filter_by(e_id=e_id).first()
     db.session.delete(exam)
     db.session.commit()
-    return redirect(url_for('exams'))
-
-
+    return redirect(url_for('exams')) 
+ 
 @app.route('/dashboard/exams/add', methods=['GET', 'POST'])
 @login_required
 def addExam():
     form = NewExamForm()
     if form.validate_on_submit():  # Needs too check if course exists first
         exam = Exam(course_code=form.course_code.data,exam_name=form.exam_name.data, weighting=form.weighting.data,
-                    date=form.date.data, time=form.time.data, duration=form.duration.data,
+                    date=form.date.data, time=form.time.data, duration=form.duration.data, location=form.location.data,
                     user_id=current_user.get_id())
         db.session.add(exam)
         db.session.commit()
