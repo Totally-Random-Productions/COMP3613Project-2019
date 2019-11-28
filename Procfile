@@ -1,1 +1,1 @@
-web: gunicorn priorityu:app
+web: gunicorn priorityU:app
