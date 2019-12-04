@@ -66,7 +66,7 @@ def dashboard():
     alert_date = today + timedelta(days=5)
     #asg_alerts = Assignment.query.filter(Assignment.due_date <= filter_after).all()
     asg_alerts = Assignment.query.filter(Assignment.due_date <= alert_date, Assignment.user_id==current_user.get_id(), Assignment.complete==False).all()
-    exam_alerts = Exam.query.filter(Exam.date <= alert_date, Exam.user_id==current_user.get_id()).all()
+    exam_alerts = Exam.query.filter(Exam.date <= alert_date, Exam.date >= today-timedelta(days=1), Exam.user_id==current_user.get_id()).all()
     num_tasks = len(asg_alerts) + len(exam_alerts)
 
     return render_template('dashboard.html', name=current_user.username, courses=user_courses, exams=user_exams,
