@@ -48,8 +48,16 @@ Dashboard
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome back, {{ name }}</h1>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h2>Alerts</h2>
+
+
+          <!-- REMINDERS BASED ON PRIORITY FIGURES-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main", style="margin-left: 250px">
+        <div class="row">
+           <table class="table table-striped table-hover">
+            <!--Dominic Smart 18/11 - Start of code for printing courses-->
+            <thead class="thead-dark">
+            <tr>
+                 <h2>Alerts</h2>
           {% if num_tasks > 0 %}
           <button data-toggle="collapse" data-target="#alert" class="btn btn-danger btn-sm"> DUE IN <5 DAYS</button>
           <div id="alert" class="collapse">
@@ -74,17 +82,9 @@ Dashboard
             </div>
           </div>
           {% endif %}
-          </div>
-
-
-          <!-- REMINDERS BASED ON PRIORITY FIGURES-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main", style="margin-left: 250px">
-        <div class="row">
-           <table class="table table-striped table-hover">
-            <!--Dominic Smart 18/11 - Start of code for printing courses-->
-            <thead class="thead-dark">
+            </tr>
                 <tr>
-                    <th></th><th></th>
+                    <th></th> <th></th>
                 </tr>
             </thead>
             <tbody>
