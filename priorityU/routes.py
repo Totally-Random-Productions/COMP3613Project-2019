@@ -108,7 +108,7 @@ def deleteCourse(c_id):
 def exams():
     user_exams = Exam.query.filter_by(user_id=current_user.get_id()).order_by(Exam.date.asc()).all()
     # Dominic 18/11- user exam data query
-    return render_template('exams.html', exams=user_exams,form=None, edit_state=False,add_state=False)
+    return render_template('exams.html', exams=user_exams, form=None, edit_state=False,add_state=False)
 
 
 @app.route('/dashboard/updateexam/<e_id>', methods=['GET','POST'])
