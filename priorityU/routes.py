@@ -65,7 +65,7 @@ def dashboard():
     today = datetime.today()
     alert_date = today + timedelta(days=5)
     #asg_alerts = Assignment.query.filter(Assignment.due_date <= filter_after).all()
-    asg_alerts = Assignment.query.filter(Assignment.due_date <= alert_date, Assignment.user_id==current_user.get_id()).all()
+    asg_alerts = Assignment.query.filter(Assignment.due_date <= alert_date, Assignment.user_id==current_user.get_id(), Assignment.complete==False).all()
     exam_alerts = Exam.query.filter(Exam.date <= alert_date, Exam.user_id==current_user.get_id()).all()
     num_tasks = len(asg_alerts) + len(exam_alerts)
 
@@ -166,21 +166,20 @@ def addAssignments():
         db.session.add(assignment)
         db.session.commit()
         return redirect(url_for('assignments'))
-    return render_template('assignments.html',eidt_state=True, add_state=False, form=form)
+    return render_template('assignments.html', edit_state=False, add_state=True, form=form)
 
 
 @app.route('/dashboard/updateassignment/<a_id>', methods=['GET','POST'])
 @login_required
 def updateAssignment(a_id):
-    edit_state=True
     a = Assignment.query.get(a_id)
-    form = NewAssignmentForm(course_code=a.course_code,asg_name=a.asg_name, weighting=a.weighting, due_date=a.due_date,due_time=a.due_time)
+    form = NewAssignmentForm(course_code=a.course_code,asg_name=a.asg_name, weighting=a.weighting, due_date=a.due_date, due_time=a.due_time)
 
     if form.validate_on_submit():
-        Assignment.query.filter_by(a_id=a_id).update(dict(course_code=form.course_code.data, asg_name=form.asg_name.data,weighting=form.weighting.data,due_date=form.due_date.data,due_time=form.due_time.data))
+        Assignment.query.filter_by(a_id=a_id).update(dict(course_code=form.course_code.data, asg_name=form.asg_name.data,weighting=form.weighting.data, due_date=form.due_date.data,due_time=form.due_time.data))
         db.session.commit()
         return redirect(url_for('assignments'))
-    return render_template("assignments.html", edit_state=True, form=form)
+    return render_template("assignments.html", add_state=False, edit_state=True, form=form)
 
 
 @app.route('/dashboard/markcomplete/<a_id>', methods=['GET', 'POST'])

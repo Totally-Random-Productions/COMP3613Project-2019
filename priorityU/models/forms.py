@@ -51,7 +51,7 @@ class NewExamForm(FlaskForm):
     course_code = StringField('Course code', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Course"
                                                                                  )],
                               render_kw={"placeholder": "COMP 354"})
-    exam_name   = StringField('Exame Name', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Exam Name")], render_kw={"placeholder":"Exam Name"})
+    exam_name   = StringField('Exam Name', validators=[InputRequired(), Length(min=4, max=50, message="Invalid Exam Name")], render_kw={"placeholder":"Exam Name"})
     weighting = IntegerField('Exam Weighting (%)', validators=[InputRequired()],
                              render_kw={"placeholder": "100"})
     date = DateField('Exam Date', validators=[InputRequired()], format='%d/%m/%Y',

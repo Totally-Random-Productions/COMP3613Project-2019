@@ -65,7 +65,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/run.py" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -90,11 +90,11 @@
     </configuration>
     <configuration name="priorityU_BASE" type="Python.FlaskServer">
       <module name="priorityU_BASE" />
-      <option name="target" value="$PROJECT_DIR$/__init__.py" />
+      <option name="target" value="C:\Users\Angel\Documents\COMP3613Project-2019\run.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="C:\Users\Angel\AppData\Local\Programs\Python\Python37\python.exe" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -103,6 +103,10 @@
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Flask server.priorityU_BASE" />
+      <item itemvalue="JavaScript Debug.assignments.html" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JavaScript Debug.assignments.html" />
@@ -142,6 +146,7 @@
       <workItem from="1574746534857" duration="303000" />
       <workItem from="1574746845286" duration="2292000" />
       <workItem from="1574798274494" duration="5279000" />
+      <workItem from="1575427399954" duration="4031000" />
     </task>
     <servers />
   </component>
@@ -162,6 +167,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/COMP3613Project_2019$priorityU_BASE.coverage" NAME="priorityU_BASE Coverage Results" MODIFIED="1575431458301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/priorityU$priorityU_BASE.coverage" NAME="priorityU_BASE Coverage Results" MODIFIED="1574802775171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

@@ -46,7 +46,7 @@ Dashboard
       </div>
 
 
-      {% if not add_state  and form != None %}
+      {% if add_state  and form != None %}
       <form class="form-signin" method="POST">
             <h2 class="form-signin-heading">Add Assignment</h2>
          
@@ -60,9 +60,8 @@ Dashboard
             <a href="{{ url_for('assignments') }}">Back</a>
        </form>
 
-      {% elif not edit_state and form != None %}
-      <form class="form-signin" method="POST"> 
-          <div class="col-sm-4 col-md-offset-2 main">
+      {% elif edit_state and form != None %}
+      <form class="form-signin" method="POST">
             <h2 class="form-signin-heading">Update Assignment</h2>
             {{ form.hidden_tag() }} 
             {{ wtf.form_field(form.course_code) }}
@@ -72,7 +71,6 @@ Dashboard
             {{ wtf.form_field(form.due_time) }}
             <button class="btn btn-lg btn-primary btn-sm btn-dark" type="submit">Update</button>
             <a href="{{ url_for('assignments') }}">Back</a>
-          </div>
        </form> 
       {% else %}
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
